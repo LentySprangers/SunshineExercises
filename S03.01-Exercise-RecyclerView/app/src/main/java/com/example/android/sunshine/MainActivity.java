@@ -35,29 +35,10 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Within forecast_list_item.xml //////////////////////////////////////////////////////////////
-
-    // Within forecast_list_item.xml //////////////////////////////////////////////////////////////
-
-
-    // Within ForecastAdapter.java /////////////////////////////////////////////////////////////////
-
-
-    // Within ForecastAdapterViewHolder ///////////////////////////////////////////////////////////
-
-    // Within ForecastAdapterViewHolder ///////////////////////////////////////////////////////////
-
-
-    // Within ForecastAdapter.java /////////////////////////////////////////////////////////////////
-
-
-    // TODO (33) Delete mWeatherTextView
-
-
-    // TODO (34) Add a private RecyclerView variable called mRecyclerView
-    // TODO (35) Add a private ForecastAdapter variable called mForecastAdapter
+    // COMPLETED (33) Delete mWeatherTextView
+    // COMPLETED (34) Add a private RecyclerView variable called mRecyclerView
     private RecyclerView mRecyclerView;
-
+    // COMPLETED (35) Add a private ForecastAdapter variable called mForecastAdapter
     private ForecastAdapter mForecastAdapter;
 
     private TextView mErrorMessageDisplay;
@@ -69,30 +50,47 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast);
 
-        // TODO (36) Delete the line where you get a reference to mWeatherTextView
+        // COMPLETED (36) Delete the line where you get a reference to mWeatherTextView
+
+        // COMPLETED (37) Use findViewById to get a reference to the RecyclerView
         /*
-         * Using findViewById, we get a reference to our TextView from xml. This allows us to
-         * do things like set the text of the TextView.
+         * Using findViewById, we get a reference to our RecyclerView from xml. This allows us to
+         * do things like set the adapter of the RecyclerView and toggle the visibility.
          */
-
-
-        // TODO (37) Use findViewById to get a reference to the RecyclerView
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_forecast);
 
         /* This TextView is used to display errors and will be hidden if there are no errors */
         mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
 
-        // TODO (38) Create layoutManager, a LinearLayoutManager with VERTICAL orientation and shouldReverseLayout == false
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-
-        // TODO (39) Set the layoutManager on mRecyclerView
+        // COMPLETED (38) Create layoutManager, a LinearLayoutManager with VERTICAL orientation and shouldReverseLayout == false
+        /*
+         * LinearLayoutManager can support HORIZONTAL or VERTICAL orientations. The reverse layout
+         * parameter is useful mostly for HORIZONTAL layouts that should reverse for right to left
+         * languages.
+         */
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        // COMPLETED (41) Set the layoutManager on mRecyclerView
         mRecyclerView.setLayoutManager(layoutManager);
 
-        // TODO (40) Use setHasFixedSize(true) on mRecyclerView to designate that all items in the list will have the same size
+        // COMPLETED (42) Use setHasFixedSize(true) on mRecyclerView to designate that all items in the list will have the same size
+        /*
+         * Use this setting to improve performance if you know that changes in content do not
+         * change the child layout size in the RecyclerView
+         */
         mRecyclerView.setHasFixedSize(true);
-        // TODO (41) set mForecastAdapter equal to a new ForecastAdapter
+
+        // COMPLETED (43) set mForecastAdapter equal to a new ForecastAdapter
+        /*
+         * The ForecastAdapter is responsible for linking our weather data with the Views that
+         * will end up displaying our weather data.
+         */
         mForecastAdapter = new ForecastAdapter();
-        // TODO (42) Use mRecyclerView.setAdapter and pass in mForecastAdapter
+
+        // COMPLETED (44) Use mRecyclerView.setAdapter and pass in mForecastAdapter
+        /* Setting the adapter attaches it to the RecyclerView in our layout. */
         mRecyclerView.setAdapter(mForecastAdapter);
+
         /*
          * The ProgressBar that will indicate to the user that we are loading data. It will be
          * hidden when no data is loading.
@@ -127,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
     private void showWeatherDataView() {
         /* First, make sure the error is invisible */
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
-        // TODO (43) Show mRecyclerView, not mWeatherTextView
+        // COMPLETED (44) Show mRecyclerView, not mWeatherTextView
         /* Then, make sure the weather data is visible */
         mRecyclerView.setVisibility(View.VISIBLE);
     }
@@ -140,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
      * need to check whether each view is currently visible or invisible.
      */
     private void showErrorMessage() {
-        // TODO (44) Hide mRecyclerView, not mWeatherTextView
+        // COMPLETED (44) Hide mRecyclerView, not mWeatherTextView
         /* First, hide the currently visible data */
         mRecyclerView.setVisibility(View.INVISIBLE);
         /* Then, show the error */
@@ -186,12 +184,7 @@ public class MainActivity extends AppCompatActivity {
             mLoadingIndicator.setVisibility(View.INVISIBLE);
             if (weatherData != null) {
                 showWeatherDataView();
-                // TODO (45) Instead of iterating through every string, use mForecastAdapter.setWeatherData and pass in the weather data
-                /*
-                 * Iterate through the array and append the Strings to the TextView. The reason why we add
-                 * the "\n\n\n" after the String is to give visual separation between each String in the
-                 * TextView. Later, we'll learn about a better way to display lists of data.
-                 */
+                // COMPLETED (45) Instead of iterating through every string, use mForecastAdapter.setWeatherData and pass in the weather data
                 mForecastAdapter.setWeatherData(weatherData);
             } else {
                 showErrorMessage();
@@ -222,5 +215,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }
